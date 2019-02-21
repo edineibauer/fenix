@@ -1,9 +1,9 @@
 <?php
 
-if(!empty($dados['senha'])) {
+if(empty($dados['usuario_id']) && !empty($dados['senha'])) {
     $user = [
         "nome" => $dados['agente'],
-        "email" => $dados['email'],
+        "email" => $dados['email'] ?? "",
         "password" => $dados['senha'],
         "setor" => 3,
         "nivel" => 1,
@@ -15,11 +15,12 @@ if(!empty($dados['senha'])) {
     $user['nome'] = $user['nome'] . ($read->getResult() ? "-" . strtotime('now') : "");
     $user["nome_usuario"] = \Helpers\Check::name($user['nome']);
 
-    $create = new \Conn\Create();
-    $create->exeCreate("usuarios", $user);
+    $dic = new \Entity\Dicionario("usuarios");
+    $dic->setData($user);
+    $dic->save();
 
-    if($create->getResult()) {
-        $dados['usuario_id'] = $create->getResult();
+    if(!$dic->getError()) {
+        $dados['usuario_id'] = $dic->search(0)->getValue();
         $up = new \Conn\Update();
         $up->exeUpdate("agentes", $dados, "WHERE id = :id", "id={$dados['id']}");
     }
