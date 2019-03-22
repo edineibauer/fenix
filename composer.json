@@ -1,0 +1,16 @@
+{
+  "name": "ueb/fenix",
+  "description": "Projeto para Gerenciamento de Transportes de Carga",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Edinei J. Bauer",
+      "email": "edineibauer@gmail.com"
+    }
+  ],
+  "require": {
+    "ueb/dashboard": "*",
+    "php": "^7.1",
+    "ext-json": "*"
+  }
+}
